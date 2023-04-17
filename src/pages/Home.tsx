@@ -8,11 +8,6 @@ const Home = () => {
     const { articles, loading } = useNewsContext();
 
     console.log('articulos home:', articles)
-    if (loading == true) {
-    } else {
-        console.log('no cargo nada')
-    }
-
 
     return (
         <>

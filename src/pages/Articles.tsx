@@ -1,18 +1,17 @@
-import React from 'react'
 import { useNewsContext } from '../context/NewsContext';
 import { format, parseISO } from "date-fns";
 import { Link } from 'react-router-dom';
 
 const Articles = () => {
-    const { articles, loading } = useNewsContext();
+    const { articles } = useNewsContext();
 
     return (
         <div className='dark:bg-gray-900'>
-            <section className="flex flex-col md:flex-row items-center justify-center dark:bg-gray-100">
+            <section className="flex flex-col md:flex-row post-center justify-center dark:bg-gray-100">
                 <div className="w-full md:w-1/2">
                     <img src={articles[0]?.image} alt={articles[0]?.source.name} className="w-full h-auto" />
                 </div>
-                <Link to={`/articles/${articles[0]?.source.name}`} className="w-full md:w-1/2 py-2 md:p-4 h-full">
+                <Link to={`/articles/${articles[0]?.source.name}`} className="w-full md:w-1/2 p-4 md:px-3 h-full">
                     <h2 className="mt-3 text-base text-gray-700 font-black dark:text-gray-800 md:text-3xl">
                         {articles[0]?.title}
                     </h2>
@@ -29,57 +28,57 @@ const Articles = () => {
             </section>
 
             <section className='container px-6 py-10 mx-auto '>
+                <div className="mx-auto max-w-2xl lg:mx-0 py-12">
+                    <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">From the blog</h2>
+                    <p className="mt-2 text-lg leading-8 text-gray-200">
+                        See the lastest news.
+                    </p>
+                </div>
                 {articles && (
-                        <><div className="grid gap-10 md:grid-cols-2 lg:gap-10 ">
-                        {articles.slice(0, 2).map(post => (
-                            <div>
-                                <img className="relative  object-cover w-full rounded-md h-96"
-                                    src={post?.image} alt={post?.source.name} />
-                                <div className="relative z-20 w-10/12 sm:h-fit md:h-52 p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-950">
+                    <><div className="grid gap-10 md:grid-cols-3 lg:gap-10 ">
+                        {articles?.slice(1, 4).map(article => (
 
-                                    <Link to="/blog" className="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
-                                        {post?.source.name}
-                                    </Link>
-
-                                    <p className="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-base">
-                                        {post?.title}
-                                    </p>
-                                    {post?.publishedAt && <>
-                                        <p className="mt-3 text-sm text-blue-500">
-                                            Published :  {format(parseISO(post.publishedAt), "MMMM dd, yyyy")}
-                                        </p>
-                                    </>}
-                                    <Link to={`/articles/${post?.source.name}`} className="block mt-2 self-end">
-                                        <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">View more &rarr;</button>
-                                    </Link>
-                                </div>
-                            </div>
-
-                        ))}
-                    </div><div className="mt-10 grid gap-10 md:grid-cols-2 lg:gap-10 xl:grid-cols-3 ">
-                            {articles.slice(2, 14).map(post => (
-                                <div>
-                                    <img className="relative z-10 object-cover w-full rounded-md h-96"
-                                        src={post?.image} alt={post?.source.name} />
-                                    <div className="relative z-20 w-10/12 sm:h-fit md:h-52 p-6 mx-auto -mt-20 bg-white rounded-md shadow dark:bg-gray-950">
-
-                                        <Link to="/blog" className="font-semibold text-gray-800 hover:underline dark:text-white md:text-xl">
-                                            {post?.source.name}
-                                        </Link>
-
-                                        <p className="mt-3 text-sm text-gray-500 dark:text-gray-300 md:text-base">
-                                            {post?.title}
-                                        </p>
-                                        {post?.publishedAt && <>
+                            <article className="flex flex-col dark:bg-gray-100" key={article.source.name}>
+                                <Link rel="noopener noreferrer" to={`/articles/${article.source.name}`} aria-label="Te nulla oportere reprimique his dolorum">
+                                    <img alt={article.source.name} className="object-cover w-full h-52 dark:bg-gray-500" src={article.image} />
+                                </Link>
+                                <div className="flex flex-col flex-1 p-6">
+                                    <Link rel="noopener noreferrer" to={`/articles/${article.source.name}`} className="text-xs tracking-wider uppercase hover:underline dark:text-violet-900">{article.source.name}</Link>
+                                    <h2 className="flex-1 py-2 text-lg font-bold leading-snug">{article.title}</h2>
+                                    <h3 className="flex-1 py-2 text-lg font-semibold leading-snug">{article.description}</h3>
+                                    <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
+                                        {article?.publishedAt && <>
                                             <p className="mt-3 text-sm text-blue-500">
-                                                Published :  {format(parseISO(post.publishedAt), "MMMM dd, yyyy")}
+                                                Published:  {format(parseISO(article.publishedAt), "MMMM dd, yyyy")}
                                             </p>
                                         </>}
-                                        <Link to={`/articles/${post?.source.name}`} className="block mt-2 self-end">
-                                            <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">View more &rarr;</button>
-                                        </Link>
+                                        <Link to={`/articles/${article.source.name}`} className="dark:text-violet-900 mt-3 text-sm"> Read more &rarr;</Link>
                                     </div>
                                 </div>
+                            </article>
+
+                        ))}
+                    </div>
+                        <div className="mt-10 grid gap-10 md:grid-cols-4 lg:gap-10 xl:grid-cols-4 ">
+                            {articles.slice(5, 9).map(article => (
+                                <article className="flex flex-col dark:bg-gray-100" key={article.source.name}>
+                                    <Link rel="noopener noreferrer" to={`/articles/${article.source.name}`} aria-label="Te nulla oportere reprimique his dolorum">
+                                        <img alt={article.source.name} className="object-cover w-full h-52 dark:bg-gray-500" src={article.image} />
+                                    </Link>
+                                    <div className="flex flex-col flex-1 p-6">
+                                        <Link rel="noopener noreferrer" to={`/articles/${article.source.name}`} className="text-xs tracking-wider uppercase hover:underline dark:text-violet-900">{article.source.name}</Link>
+                                        <h2 className="flex-1 py-2 text-lg font-semibold leading-snug">{article.title}</h2>
+                                        <h3 className="flex-1 py-2 text-lg font-semibold leading-snug">{article.description}</h3>
+                                        <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
+                                            {article?.publishedAt && <>
+                                                <p className="mt-3 text-sm text-blue-500">
+                                                    Published:  {format(parseISO(article.publishedAt), "MMMM dd, yyyy")}
+                                                </p>
+                                            </>}
+                                            <Link to={`/articles/${article.source.name}`} className="dark:text-violet-900 mt-3 text-sm"> Read more &rarr;</Link>
+                                        </div>
+                                    </div>
+                                </article>
                             ))}
                         </div></>
 

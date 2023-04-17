@@ -4,6 +4,7 @@ import { useNewsContext } from '../context/NewsContext';
 import { format, parseISO } from "date-fns";
 
 const ArticleDetail = () => {
+
   const { articleID } = useParams<{ articleID: string }>();
   const { articles } = useNewsContext();
   const article = articles.find((article) => article.source.name === articleID);
@@ -11,7 +12,7 @@ const ArticleDetail = () => {
   if (!article) {
     return <h1>Article not found</h1>;
   }
-  console.log(article);
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 mt-12">
@@ -35,8 +36,8 @@ const ArticleDetail = () => {
           <div className="flex items-center">
             <img
               className="h-10 w-10 rounded-full object-cover"
-              src={article.image}
-              alt={article.source.name}
+              src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff`} 
+              alt={`author's avatar`}
             />
             <div className="ml-4">
               <div className="text-base font-medium text-gray-900">
